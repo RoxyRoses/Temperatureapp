@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:temperatureapp/model/forecast_repository.dart';
 import 'package:temperatureapp/model/forecast_model.dart';
+
+import '../view/forecast_page.dart';
 
 class ForecastController {
   ForecastsModel forecast = ForecastsModel();
@@ -12,9 +16,13 @@ class ForecastController {
 
   forecastName(String value) => forecast.name = value;
 
-  void searchForecast() {
+  Future<void> searchForecast(BuildContext context) async {
     if (formKey.currentState!.validate()) {
-      ForecastRepository().fetchForecast(forecast);
+      forecast = await ForecastRepository().fetchForecast(forecast);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ForecastPage(forecast: forecast)));
     }
   }
 }

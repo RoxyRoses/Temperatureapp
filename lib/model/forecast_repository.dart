@@ -10,8 +10,8 @@ class ForecastRepository {
         Uri.parse('https://goweather.herokuapp.com/weather/' + model.name),
       );
       await Future.delayed(const Duration(seconds: 2));
-      //try catch
-      return ForecastsModel.fromJson(jsonDecode(response.body));
+      model = ForecastsModel.fromJson(jsonDecode(response.body));
+      return model;
     } on Exception catch (_) {
       throw Exception('Failed to load forecast');
     }

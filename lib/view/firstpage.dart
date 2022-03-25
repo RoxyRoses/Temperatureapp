@@ -126,7 +126,7 @@ class _FirstPageState extends State<FirstPage> {
                                   // foreground
                                 ),
                                 onPressed: () {
-                                  controller.searchForecast();
+                                  controller.searchForecast(context);
                                 },
                                 child: const Text('Confirm'),
                               ),
