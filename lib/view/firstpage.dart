@@ -1,7 +1,10 @@
+import 'dart:ffi';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:temperatureapp/model/forcast_repository.dart';
+import 'package:temperatureapp/controller/forecast_controller.dart';
+import 'package:temperatureapp/model/forecast_model.dart';
+
+import '../model/forecast_repository.dart';
 
 class FirstPage extends StatefulWidget {
   const FirstPage({Key? key}) : super(key: key);
@@ -11,8 +14,15 @@ class FirstPage extends StatefulWidget {
 }
 
 class _FirstPageState extends State<FirstPage> {
-  final _formKey = GlobalKey<FormState>();
   final controllerCity = TextEditingController();
+
+  late ForecastController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = ForecastController(ForecastRepository());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +45,7 @@ class _FirstPageState extends State<FirstPage> {
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: SingleChildScrollView(
               child: Form(
-                key: _formKey,
+                key: controller.formKey,
                 child: Column(
                   children: [
                     Container(
@@ -58,8 +68,14 @@ class _FirstPageState extends State<FirstPage> {
                           left: size.width * 20 / size.width,
                           right: size.width * 20 / size.width),
                       child: TextFormField(
-                        validator: (value) =>
-                            ForecastRepository().validateCity(value),
+                        onChanged: (value) => controller.forecastName(value),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Enter a valid city';
+                          } else {
+                            return null;
+                          }
+                        },
                         decoration: InputDecoration(
                           hintText: 'City',
                           filled: true,
@@ -93,27 +109,24 @@ class _FirstPageState extends State<FirstPage> {
                               height: size.height * 40 / size.height,
                               child: ElevatedButton(
                                 style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            const Color(0xff918AE2)),
-                                    shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            side: const BorderSide(
-                                                color: Color(0xff918AE2))))
-                                    // foreground
-                                    ),
-                                onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const FirstPage(),
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                    const Color.fromARGB(255, 23, 130, 231),
+                                  ),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      side: const BorderSide(
+                                        color:
+                                            Color.fromARGB(255, 23, 130, 231),
                                       ),
-                                    );
-                                  }
+                                    ),
+                                  ),
+                                  // foreground
+                                ),
+                                onPressed: () {
+                                  controller.searchForecast();
                                 },
                                 child: const Text('Confirm'),
                               ),
@@ -121,7 +134,7 @@ class _FirstPageState extends State<FirstPage> {
                           ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

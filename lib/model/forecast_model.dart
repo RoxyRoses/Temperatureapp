@@ -2,11 +2,23 @@ class ForecastsModel {
   String? temperature;
   String? wind;
   String? description;
-  String? name;
+  late String name = '';
   List<Forecast>? forecast;
 
   ForecastsModel(
-      {this.temperature, this.wind, this.description, this.forecast});
+      {this.temperature,
+      this.wind,
+      this.description,
+      this.forecast,
+      this.name = ''});
+
+  String? get getName {
+    return name;
+  }
+
+  set setName(String names) {
+    name = names;
+  }
 
   ForecastsModel.fromJson(Map<String, dynamic> json) {
     temperature = json['temperature'];
