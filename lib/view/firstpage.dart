@@ -54,7 +54,7 @@ class _FirstPageState extends State<FirstPage> {
                         padding: EdgeInsets.only(
                             top: size.height * 350 / size.height),
                         child: Text(
-                          "City",
+                          "Type the City",
                           style: TextStyle(
                               fontSize: size.height * 35 / size.height,
                               fontWeight: FontWeight.bold,
