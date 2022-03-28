@@ -45,11 +45,11 @@ class ForecastsModel {
 }
 
 class Forecast {
-  String? day;
-  String? temperature;
-  String? wind;
+  String day = '';
+  String temperature = '';
+  String wind = '';
 
-  Forecast({this.day, this.temperature, this.wind});
+  Forecast({required this.day, required this.temperature, required this.wind});
 
   Forecast.fromJson(Map<String, dynamic> json) {
     day = json['day'];

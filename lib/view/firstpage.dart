@@ -2,7 +2,6 @@ import 'dart:ffi';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:temperatureapp/controller/forecast_controller.dart';
-import 'package:temperatureapp/model/forecast_model.dart';
 
 import '../model/forecast_repository.dart';
 
@@ -52,7 +51,7 @@ class _FirstPageState extends State<FirstPage> {
                       alignment: Alignment.center,
                       child: Padding(
                         padding: EdgeInsets.only(
-                            top: size.height * 350 / size.height),
+                            top: size.height * 300 / size.height),
                         child: Text(
                           "Type the City",
                           style: TextStyle(

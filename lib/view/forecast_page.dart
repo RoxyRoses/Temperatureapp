@@ -75,7 +75,7 @@ class ForecastPage extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(
                       top: size.height * 75 / size.height,
-                      left: size.height * 35 / size.height,
+                      left: size.width * 50 / size.width,
                     ),
                     child: BorderedText(
                       strokeWidth: 5.0,
@@ -135,77 +135,98 @@ class ForecastPage extends StatelessWidget {
                   color: Colors.white,
                   fontSize: size.height * 18 / size.height),
             ),
+            const SizedBox(
+              height: 15,
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
                   SizedBox(
-                    height: size.height * 205 / size.height,
-                    width: size.width * 150 / size.width,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: BorderedText(
-                            strokeWidth: 5.0,
-                            child: Text(
-                              'Day ',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: size.height * 15 / size.height),
-                            ),
+                    height: size.height * 190 / size.height,
+                    width: size.width * 390 / size.width,
+                    child: ListView.builder(
+                      itemCount: forecast.forecast?.length,
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (BuildContext context, int index) {
+                        return SizedBox(
+                          height: size.height * 230 / size.height,
+                          width: size.width * 150 / size.width,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: BorderedText(
+                                  strokeWidth: 5.0,
+                                  child: Text(
+                                    'Day ' +
+                                        (forecast.forecast?[index].day ?? 0)
+                                            .toString(),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize:
+                                            size.height * 15 / size.height),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: BorderedText(
+                                  strokeWidth: 5.0,
+                                  child: Text(
+                                    'Temperature',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize:
+                                            size.height * 15 / size.height),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  (forecast.forecast?[index].temperature ?? 0)
+                                      .toString(),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: size.height * 15 / size.height),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: BorderedText(
+                                  strokeWidth: 5.0,
+                                  child: Text(
+                                    'Wind',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize:
+                                            size.height * 15 / size.height),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  (forecast.forecast?[index].wind ?? 0)
+                                      .toString(),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: size.height * 15 / size.height),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: BorderedText(
-                            strokeWidth: 5.0,
-                            child: Text(
-                              'Temperature',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: size.height * 15 / size.height),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            ' ',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: size.height * 15 / size.height),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: BorderedText(
-                            strokeWidth: 5.0,
-                            child: Text(
-                              'Wind',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: size.height * 15 / size.height),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            '',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: size.height * 15 / size.height),
-                          ),
-                        ),
-                      ],
+                        );
+                      },
                     ),
-                  ),
+                  )
                 ],
               ),
             )
@@ -238,7 +259,7 @@ class ForecastPage extends StatelessWidget {
 
   Color changeColor(ForecastsModel forecast) {
     if (forecast.description.toString() == "Partly cloudy") {
-      return Colors.blue;
+      return Colors.grey;
     }
     if (forecast.description.toString() == "Clear") {
       return Colors.blue;

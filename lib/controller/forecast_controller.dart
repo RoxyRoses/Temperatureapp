@@ -19,10 +19,26 @@ class ForecastController {
   Future<void> searchForecast(BuildContext context) async {
     if (formKey.currentState!.validate()) {
       forecast = await ForecastRepository().fetchForecast(forecast);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ForecastPage(forecast: forecast)));
+
+      if (forecast.temperature == '') {
+        showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+                  title: const Text('Error'),
+                  content: const Text('City not found'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'OK'),
+                      child: const Text('OK'),
+                    ),
+                  ],
+                ));
+      } else {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ForecastPage(forecast: forecast)));
+      }
     }
   }
 }
